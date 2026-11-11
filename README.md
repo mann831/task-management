@@ -9,40 +9,30 @@ A practical full-stack demo for assigning work and tracking progress. The admin 
 - **Auth and middleware:** JWT authentication, role authorization, request validation
 - **Live updates:** Socket.IO, with the browser Web Notification API
 
-## Run locally
+## Quick setup on Windows 11
 
-Requirements: Node.js 18+ and Docker (or a local MongoDB instance).
+Copy or download the complete project folder onto the computer, then double-click `setup.bat`. It checks for Docker Desktop, installs it with `winget` if needed, creates a local `.env` with a random JWT secret, and uses Docker Compose to build and start the frontend, API, and MongoDB containers. It also creates the demo accounts and sample tasks.
 
-1. Start MongoDB:
+Open `http://localhost:5173` when setup finishes. Docker Desktop must be running; its installation may require administrator approval, WSL 2, or a Windows restart. If prompted to restart, do so and double-click `setup.bat` again. The computer needs an internet connection to install Docker Desktop and download the container images. `.env` is local and git-ignored; keep it if you want to preserve the same JWT secret on later runs.
 
-   ```sh
-   docker compose up -d mongo
-   ```
+## Manual setup
 
-2. Configure the API:
+Requirements: Docker Desktop with Docker Compose.
 
-   ```sh
-   Copy-Item server\.env.example server\.env
-   ```
-
-   Update `JWT_SECRET` in `server/.env` to a long, random value before using this beyond a local demo.
-
-3. Install dependencies from the project root and seed demo data:
+1. Create a root `.env` file containing a long, random `JWT_SECRET`:
 
    ```sh
-   npm install
-   npm install --prefix server
-   npm install --prefix client
-   npm run seed
+   JWT_SECRET=replace-this-with-a-long-random-secret
    ```
 
-4. Start the frontend and API:
+2. Build and start the application:
 
    ```sh
-   npm run dev
+   docker compose up -d --build mongo server client
+   docker compose --profile setup run --rm seed
    ```
 
-   Open `http://localhost:5173`.
+3. Open `http://localhost:5173`. Stop the containers with `docker compose down`; the MongoDB data remains in its Docker volume.
 
 ## Demo accounts
 
