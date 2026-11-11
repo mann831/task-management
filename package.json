@@ -1,0 +1,16 @@
+{
+  "name": "employee-task-management",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Employee task management demo with MongoDB, Express, React, and browser notifications",
+  "scripts": {
+    "dev": "concurrently \"npm run dev --prefix server\" \"npm run dev --prefix client\"",
+    "dev:server": "npm run dev --prefix server",
+    "dev:client": "npm run dev --prefix client",
+    "seed": "npm run seed --prefix server",
+    "build": "npm run build --prefix client"
+  },
+  "devDependencies": {
+    "concurrently": "^9.1.2"
+  }
+}
